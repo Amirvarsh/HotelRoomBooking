@@ -5,8 +5,7 @@ import Room from "../components/Room";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import { DatePicker } from "antd";
-import moment from 'moment';
-//import 'antd/dist/antd.css'; // Import Ant Design styles
+import moment from "moment";
 
 const { RangePicker } = DatePicker;
 
@@ -17,6 +16,7 @@ function Homescreen() {
 
   const [fromdate, setfromdate] = useState();
   const [todate, settodate] = useState();
+  const [duplicaterooms, setduplicaterooms] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +24,7 @@ function Homescreen() {
         setLoading(true);
         const response = await axios.get("/api/rooms/getallrooms");
         setRooms(response.data);
+        setduplicaterooms(response.data);
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -35,18 +36,58 @@ function Homescreen() {
   }, []);
 
   function filterByDate(dates) {
-    setfromdate((dates[0]).format('DD-MM-YYYY'));
-    settodate((dates[1]).format('DD-MM-YYYY'));
+    try {
+      setfromdate(dates[0].format("DD-MM-YYYY"));
+      settodate(dates[1].format("DD-MM-YYYY"));
+  
+      var temprooms = [];
+  
+      for (const room of duplicaterooms) {
+        var availability = false;
+        if (room.currentbookings.length > 0) {
+          for (const booking of room.currentbookings) {
+            if (
+              !moment(moment(dates[0]).format("DD-MM-YYYY")).isBetween(
+                booking.fromdate,
+                booking.todate
+              ) &&
+              !moment(moment(dates[1]).format("DD-MM-YYYY")).isBetween(
+                booking.fromdate,
+                booking.todate
+              )
+            ) {
+              if (
+                dates[0].format("DD-MM-YYYY") !== booking.fromdate &&
+                dates[0].format("DD-MM-YYYY") !== booking.todate &&
+                dates[1].format("DD-MM-YYYY") !== booking.fromdate &&
+                dates[1].format("DD-MM-YYYY")!== booking.todate
+              ) {
+                availability = true;
+              }
+            }
+          }
+        }else{
+          availability=true;
+        }
+  
+        if (availability === true || room.currentbookings.length === 0) {
+          temprooms.push(room);
+        }
+      }
+  
+      setRooms(temprooms);
+    } catch (error) {}
   }
+  
 
   return (
     <div className="container">
       <div className="row mt-5">
         <div className="col-md-3">
-          <RangePicker 
-            format="DD-MM-YYYY" 
-            onChange={filterByDate} 
-            style={{ width: '100%' }} // Apply the style attribute
+          <RangePicker
+            format="DD-MM-YYYY"
+            onChange={filterByDate}
+            style={{ width: "100%" }}
           />
         </div>
       </div>
