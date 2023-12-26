@@ -18,6 +18,9 @@ function Homescreen() {
   const [todate, settodate] = useState();
   const [duplicaterooms, setduplicaterooms] = useState([]);
 
+  const [searchkey, setsearchkey] = useState("");
+  const [type, settype] = useState("all");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,9 +42,9 @@ function Homescreen() {
     try {
       setfromdate(dates[0].format("DD-MM-YYYY"));
       settodate(dates[1].format("DD-MM-YYYY"));
-  
+
       var temprooms = [];
-  
+
       for (const room of duplicaterooms) {
         var availability = false;
         if (room.currentbookings.length > 0) {
@@ -60,35 +63,80 @@ function Homescreen() {
                 dates[0].format("DD-MM-YYYY") !== booking.fromdate &&
                 dates[0].format("DD-MM-YYYY") !== booking.todate &&
                 dates[1].format("DD-MM-YYYY") !== booking.fromdate &&
-                dates[1].format("DD-MM-YYYY")!== booking.todate
+                dates[1].format("DD-MM-YYYY") !== booking.todate
               ) {
                 availability = true;
               }
             }
           }
-        }else{
-          availability=true;
+        } else {
+          availability = true;
         }
-  
+
         if (availability === true || room.currentbookings.length === 0) {
           temprooms.push(room);
         }
       }
-  
+
       setRooms(temprooms);
     } catch (error) {}
   }
-  
+
+  function filterBySearch() {
+    const temprooms = duplicaterooms.filter((room) =>
+      room.name.toLowerCase().includes(searchkey.toLowerCase())
+    );
+
+    setRooms(temprooms);
+  }
+
+  function filterByType(e) {
+    settype(e)
+    if (e !== "all") {
+      const temprooms = duplicaterooms.filter(
+        (room) => room.type.toLowerCase() == e.toLowerCase()
+      );
+      setRooms(temprooms);
+    } else {
+      setRooms(duplicaterooms);
+    }
+  }
 
   return (
     <div className="container">
-      <div className="row mt-5">
+      <div className="row mt-5 bs">
         <div className="col-md-3">
           <RangePicker
             format="DD-MM-YYYY"
             onChange={filterByDate}
             style={{ width: "100%" }}
           />
+        </div>
+        <div className="col-md-5">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="search rooms"
+            value={searchkey}
+            onChange={(e) => {
+              setsearchkey(e.target.value);
+            }}
+            onKeyUp={filterBySearch}
+          />
+        </div>
+
+        <div
+          className="col-md-3"
+          value={type}
+          onChange={(e) => {
+            filterByType(e.target.value);
+          }}
+        >
+          <select className="form-control">
+            <option value="all">All</option>
+            <option value="Delux">Delux</option>
+            <option value="Non-Delux">Non-Delux</option>
+          </select>
         </div>
       </div>
 
@@ -97,14 +145,12 @@ function Homescreen() {
           <h1>
             <Loader />
           </h1>
-        ) : rooms.length > 0 ? (
+        ) : (
           rooms.map((room) => (
             <div key={room.id} className="col-md-9 mt-2">
               <Room room={room} fromdate={fromdate} todate={todate} />
             </div>
           ))
-        ) : (
-          <Error />
         )}
       </div>
     </div>

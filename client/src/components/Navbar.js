@@ -24,7 +24,7 @@ function Navbar() {
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon">
-          <i class="bi bi-list" style={{color:"white"}}></i>
+            <i class="bi bi-list" style={{ color: "white" }}></i>
           </span>
         </button>
 
@@ -32,18 +32,18 @@ function Navbar() {
           <ul className="navbar-nav mr-5">
             {user ? (
               <>
-                <div class="dropdown">
+                <div class="dropdown" >
                   <button
                     class="btn btn-secondary dropdown-toggle"
                     type="button"
                     data-toggle="dropdown"
                     aria-expanded="false"
                   >
-                   <i class="bi bi-person-fill"></i>{user.name}
+                    <i class="bi bi-person-fill"></i> {user.name}
                   </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">
-                      Bookings
+                  <div class="dropdown-menu" style={{ minWidth: 'auto' }}>
+                    <a class="dropdown-item" href="/profile">
+                      Profile
                     </a>
                     <a class="dropdown-item" href="#" onClick={Logout}>
                       Logout

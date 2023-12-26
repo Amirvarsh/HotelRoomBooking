@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -13,66 +14,93 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.navbar{
-  background-color: brown !important;
+
+.navbar {
+  background-color: #db3434 !important; /* Updated to a shade of blue */
 }
-.nav-link{
-  color: white !important;
+
+.nav-link {
+  color: #fcfdfc !important;
+  font-size: 20px !important /* Updated to a shade of green */
 }
-.navbar-brand{
-  color: white !important;
+
+.navbar-brand {
+  color: #fdfdfd !important;
+  font-size: 20px !important /* Updated to a shade of orange */
 }
-.navbar-nav
-{
+
+.navbar-nav {
   margin-left: auto !important;
 }
-.smallimg{
+
+.smallimg {
   height: 200px;
   width: 100% !important;
   border-radius: 5px !important;
 }
-h1{
+
+h1 {
   font-size: 20px !important;
 }
-.btn{
-  border: 0px solid white !important;
-  background-color: black !important;
-  color: white !important;
-  box-shadow: none !important; 
+
+.btn {
+  border: 0px solid #e74c3c !important; /* Updated to a shade of red */
+  background-color: #34495e !important; /* Updated to a shade of dark blue */
+  color: #ecf0f1 !important; /* Updated to a shade of light gray */
+  box-shadow: none !important;
 }
-.bs{
+
+.bs {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   margin-top: 20px !important;
   border-radius: 5px !important;
   padding: 20px !important;
 }
-.bigimg{
+
+.bigimg {
   height: 400px;
   border-radius: 5px !important;
 }
+
 input,
 select,
 .ant-picker {
   box-shadow: none !important;
   margin-top: 10px;
-  border: 1px solid black !important;
+  border: 2px solid #000000 !important; /* Updated to a shade of blue */
   width: 100% !important;
   border-radius: 3px !important;
   height: 35px !important;
 }
+
 h2 {
   font-size: 30px;
   padding: 10px;
   font-weight: bold;
   text-align: center;
+  color: #000000 !important; /* Updated to a shade of red */
 }
-.dropdown-toggle{
-  border: 0px  solid brown !important;
-  background-color: brown !important;
+
+.dropdown-toggle {
+  border: 0px solid #f39c12 !important; /* Updated to a shade of orange */
+  background-color: #f39c12 !important; /* Updated to a shade of orange */
 }
+
 .bi-person {
   font-weight: bold !important;
+  color: #2ecc71 !important; /* Updated to a shade of green */
 }
-.bi-list{
+
+.bi-list {
   font-weight: bold !important;
+  font-size: xx-large;
+  color: #fbfaf9 !important; /* Updated to a shade of orange */
+}
+
+.ant-picker-input input {
+  border: none !important;
+}
+
+p{
+  font-size: 15px;
 }

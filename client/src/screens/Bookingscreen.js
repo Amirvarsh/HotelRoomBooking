@@ -4,15 +4,19 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
+import StripeCheckout from "react-stripe-checkout";
+import { loadStripe } from "@stripe/stripe-js";
+import Swal from "sweetalert2";
 
 function Bookingscreen() {
   const { roomid, fromdate, todate } = useParams();
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [room, setRoom] = useState({});
   const [user, setUser] = useState(null);
   const [totalamount, setTotalAmount] = useState(0);
   const [totaldays, setTotalDays] = useState(0);
+  const [stripe, setStripe] = useState(null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("currentUser");
@@ -66,7 +70,20 @@ function Bookingscreen() {
     calculateTotalValues();
   }, [fromdate, todate, room.rentperday]);
 
-  async function bookRoom() {
+  useEffect(() => {
+    // Load Stripe
+    const loadStripeObject = async () => {
+      const stripeObj = await loadStripe(
+        "pk_test_51OQZ27SDA4LzPuFd43u9a7MEeSB1WL2YThut5MfKwUrBcM8QkSoFVRvNkeF2Ai0BahIpCypkQM0JsVUlrHjr3K6W00EgSuMVru"
+      );
+      setStripe(stripeObj);
+    };
+
+    loadStripeObject();
+  }, []);
+
+  async function onToken(token) {
+    console.log(token);
     const bookingDetails = {
       room,
       userid: JSON.parse(localStorage.getItem("currentUser"))._id,
@@ -74,13 +91,23 @@ function Bookingscreen() {
       todate,
       totalamount,
       totaldays,
+      token,
     };
 
     try {
+      setLoading(true);
       const result = await axios.post("/api/bookings/bookroom", bookingDetails);
-      // Handle the result as needed
+      setLoading(false);
+      Swal.fire(
+        "Congratulations",
+        "Your Room Booked Successfully",
+        "success"
+      ).then((result) => {
+        window.location.href = "/bookings";
+      });
     } catch (error) {
-      // Handle the error as needed
+      setLoading(false);
+      Swal.fire("Sorry!", "Something went wrong", "error");
     }
   }
 
@@ -94,9 +121,9 @@ function Bookingscreen() {
         <div className="row justify-content-center mt-5 bs">
           <div className="col-md-6">
             <h1>{room.name}</h1>
-            <img src={room.imageurls[0]} className="bigimg" alt={room.name} />
+            <img src={room.imageurls[0]} className="bigimg img-fluid" alt="" />
           </div>
-          <div className="col-md-5">
+          <div className="col-md-6">
             <div style={{ textAlign: "right" }}>
               <h1>Booking Details</h1>
               <hr />
@@ -122,9 +149,14 @@ function Bookingscreen() {
               </b>
             </div>
             <div style={{ float: "right" }}>
-              <button className="btn btn-primary" onClick={bookRoom}>
-                Pay Now
-              </button>
+              <StripeCheckout
+                amount={totalamount * 100}
+                currency="INR"
+                token={onToken}
+                stripeKey="pk_test_51OQZ27SDA4LzPuFd43u9a7MEeSB1WL2YThut5MfKwUrBcM8QkSoFVRvNkeF2Ai0BahIpCypkQM0JsVUlrHjr3K6W00EgSuMVru"
+              >
+                <button className="btn btn-primary">Pay Now</button>
+              </StripeCheckout>
             </div>
           </div>
         </div>
