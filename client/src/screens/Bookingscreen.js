@@ -103,7 +103,7 @@ function Bookingscreen() {
         "Your Room Booked Successfully",
         "success"
       ).then((result) => {
-        window.location.href = "/bookings";
+        window.location.href = "/home";
       });
     } catch (error) {
       setLoading(false);

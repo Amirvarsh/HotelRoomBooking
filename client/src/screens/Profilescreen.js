@@ -9,10 +9,10 @@ import { Divider, Space, Tag } from 'antd';
 const { TabPane } = Tabs;
 
 const ProfileContent = ({ user }) => (
-  <div className="text-left bs">
-    <div className="row-fluid mr-3">
-      <div className="col-md-6">
-        <h1>My Profile</h1>
+  <div className="text-left">
+    <div className="row-fluid ">
+      <div className="col-md-6 bs">
+        <h1><b>My Profile</b></h1>
         <br />
         <h1>Name: {user.name}</h1>
         <h1>Email: {user.email}</h1>
