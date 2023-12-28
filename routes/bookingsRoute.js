@@ -4,7 +4,7 @@ const Booking = require("../models/booking");
 const Room = require("../models/room");
 const { v4: uuidv4 } = require("uuid");
 const stripe = require("stripe")(
-  "sk_test_51OQZ27SDA4LzPuFd4W6wyZXRqqvj7PgKT2vGqKZYcxxpem5mJ84kXN7jYumA1bZiJdmyr1wsYkmwMaNVGQ5NOgg400QLYB6BIT"
+  "Your API key"
 );
 
 router.post("/bookroom", async (req, res) => {

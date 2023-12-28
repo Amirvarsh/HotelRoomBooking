@@ -74,7 +74,7 @@ function Bookingscreen() {
     // Load Stripe
     const loadStripeObject = async () => {
       const stripeObj = await loadStripe(
-        "pk_test_51OQZ27SDA4LzPuFd43u9a7MEeSB1WL2YThut5MfKwUrBcM8QkSoFVRvNkeF2Ai0BahIpCypkQM0JsVUlrHjr3K6W00EgSuMVru"
+        "Your Api Key"
       );
       setStripe(stripeObj);
     };

@@ -17,7 +17,7 @@ app.use("/api/bookings", bookingsRoute);
 
 const port = process.env.PORT || 5000;
 app.get("/", (req, res) => {
-  res.send("This is server"); // This sends a response when someone accesses the root URL '/'
+  res.send("This is the server");
 });
 
 app.listen(port, () => console.log(`Server is Running over the port ${port}`));
