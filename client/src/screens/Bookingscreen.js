@@ -153,7 +153,7 @@ function Bookingscreen() {
                 amount={totalamount * 100}
                 currency="INR"
                 token={onToken}
-                stripeKey="pk_test_51OQZ27SDA4LzPuFd43u9a7MEeSB1WL2YThut5MfKwUrBcM8QkSoFVRvNkeF2Ai0BahIpCypkQM0JsVUlrHjr3K6W00EgSuMVru"
+                stripeKey="Your API Key"
               >
                 <button className="btn btn-primary">Pay Now</button>
               </StripeCheckout>
