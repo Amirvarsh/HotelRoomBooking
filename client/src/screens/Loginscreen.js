@@ -23,7 +23,7 @@ function LoginScreen() {
     try {
       const result = (
         await axios.post(
-          "https://hotelroombooking-i61u.onrender.com//api/users/login",
+          "https://hotel-room-booking-rho.vercel.app/api/users/login",
           user
         )
       ).data;
