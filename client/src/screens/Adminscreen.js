@@ -13,52 +13,82 @@ function AdminScreen() {
     }
   }, []);
   return (
-    <div className="ml-3 mt-3 mr-3 bs">
-      <h2 className="text-center" style={{ fontSize: "30px" }}>
-        <b>Admin Panel</b>
-      </h2>
-      <Tabs defaultActiveKey="1">
-        <TabPane
-          tab={
-            <b>
-              <i>Bookings</i>
-            </b>
-          }
-          key="1"
-        >
-          <Bookings />
-        </TabPane>
-        <TabPane
-          tab={
-            <b>
-              <i>Rooms</i>
-            </b>
-          }
-          key="2"
-        >
-          <Rooms />
-        </TabPane>
-        <TabPane
-          tab={
-            <b>
-              <i>AddRooms</i>
-            </b>
-          }
-          key="3"
-        >
-          <AddRoom />
-        </TabPane>
-        <TabPane
-          tab={
-            <b>
-              <i>Users</i>
-            </b>
-          }
-          key="4"
-        >
-          <Users />
-        </TabPane>
-      </Tabs>
+    <div style={{ padding: "70px" }}>
+      <div className="ml-3 mt-3 mr-3 bs" style={{ padding: "70px" }}>
+        <h2 className="text-center" style={{ fontSize: "30px" }}>
+          <b>Admin Panel</b>
+        </h2>
+        <Tabs defaultActiveKey="1">
+          <TabPane
+            tab={
+              <h1
+                style={{
+                  fontFamily: "unset",
+                  fontStyle: "italic",
+                  fontWeight: "bolder",
+                  fontSize: "15px",
+                }}
+              >
+                Bookings
+              </h1>
+            }
+            key="1"
+          >
+            <Bookings />
+          </TabPane>
+          <TabPane
+            tab={
+              <h1
+                style={{
+                  fontFamily: "unset",
+                  fontStyle: "italic",
+                  fontWeight: "bolder",
+                  fontSize: "15px",
+                }}
+              >
+                Rooms
+              </h1>
+            }
+            key="2"
+          >
+            <Rooms />
+          </TabPane>
+          <TabPane
+            tab={
+              <h1
+                style={{
+                  fontFamily: "unset",
+                  fontStyle: "italic",
+                  fontWeight: "bolder",
+                  fontSize: "15px",
+                }}
+              >
+                AddRooms
+              </h1>
+            }
+            key="3"
+          >
+            <AddRoom />
+          </TabPane>
+          <TabPane
+            tab={
+              <h1
+                style={{
+                  fontFamily: "unset",
+                  fontStyle: "italic",
+                  fontWeight: "bolder",
+                  fontSize: "15px",
+                }}
+              >
+                Users
+              </h1>
+            }
+            key="4"
+          >
+            <Users />
+          </TabPane>
+        </Tabs>
+      </div>
     </div>
   );
 }
@@ -226,6 +256,7 @@ export function Users() {
             <th>User ID</th>
             <th>User Name</th>
             <th>User Email</th>
+            <th>User PhoneNumber</th>
             <th>Is Admin</th>
           </tr>
         </thead>
@@ -236,6 +267,7 @@ export function Users() {
                 <td>{user._id}</td>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
+                <td>{user.phonenumber}</td>
                 <td>{user.isAdmin ? "Yes" : "No"}</td>
               </tr>
             ))
@@ -263,6 +295,7 @@ export function AddRoom() {
   const [description, setdescription] = useState();
   const [phonenumber, setphonenumber] = useState();
   const [type, settype] = useState();
+  const [ratings, setratings] = useState();
   const [imageurl1, setimageurl1] = useState();
   const [imageurl2, setimageurl2] = useState();
   const [imageurl3, setimageurl3] = useState();
@@ -274,6 +307,7 @@ export function AddRoom() {
       description,
       phonenumber,
       type,
+      ratings,
       imageurls: [imageurl1, imageurl2, imageurl3],
     };
     try {
@@ -352,6 +386,15 @@ export function AddRoom() {
           value={type}
           onChange={(e) => {
             settype(e.target.value);
+          }}
+        />
+        <input
+          type="text"
+          className="form-control"
+          placeholder="ratings"
+          value={type}
+          onChange={(e) => {
+            setratings(e.target.value);
           }}
         />
         <input

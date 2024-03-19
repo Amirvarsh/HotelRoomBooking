@@ -3,66 +3,39 @@ const router = express.Router();
 const Booking = require("../models/booking");
 const Room = require("../models/room");
 const { v4: uuidv4 } = require("uuid");
-const stripe = require("stripe")(
-  "Your API key"
-);
 
 router.post("/bookroom", async (req, res) => {
   try {
-    const { room, userid, fromdate, todate, totalamount, totaldays, token } =
+    const { token, room, userid, fromdate, todate, totalamount, totaldays } =
       req.body;
 
-    // Create customer
-    const customer = await stripe.customers.create({
-      email: token.email,
-      source: token.id,
+    // Create a new booking
+    const newBooking = new Booking({
+      room: room.name,
+      roomid: room._id,
+      userid,
+      fromdate,
+      todate,
+      totalamount: totalamount,
+      totaldays,
+      transactionId: uuidv4(),
     });
 
-    // Charge payment
-    const paymentIntent = await stripe.paymentIntents.create(
-      {
-        amount: totalamount * 100,
-        customer: customer.id,
-        currency: "inr",
-        // statement_description_suffix: "Payment using Stripe",
-        payment_method: "pm_card_visa",
-      },
-      {
-        idempotencyKey: uuidv4(),
-      }
-    );
+    // Save the booking to the database
+    const booking = await newBooking.save();
 
-    // Payment Success
-    if (paymentIntent) {
-      const newBooking = new Booking({
-        room: room.name,
-        roomid: room._id,
-        userid,
-        fromdate,
-        todate,
-        totalamount: totalamount,
-        totaldays,
-        transactionId: uuidv4(),
-      });
+    // Update room's current bookings
+    const roomTmp = await Room.findOne({ _id: room._id });
+    roomTmp.currentbookings.push({
+      bookingid: booking._id,
+      fromdate,
+      todate,
+      userid,
+      status: "confirmed",
+    });
+    await roomTmp.save();
 
-      const booking = await newBooking.save();
-
-      const roomTmp = await Room.findOne({ _id: room._id });
-      roomTmp.currentbookings.push({
-        bookingid: booking._id,
-        fromdate,
-        todate,
-        userid,
-        status: booking.status,
-      });
-
-      await roomTmp.save();
-
-      return res.status(200).json({ status: "success" });
-    }
-
-    // Payment Failure
-    return res.status(400).json({ message: "Payment Failed" });
+    res.status(200).json({ status: "success", bookingId: booking._id });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -119,4 +92,5 @@ router.get("/getallbookings", async (req, res) => {
     return res.status(400).json({ error });
   }
 });
+
 module.exports = router;

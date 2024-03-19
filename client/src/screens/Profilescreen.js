@@ -4,7 +4,7 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import Swal from "sweetalert2";
-import { Divider, Space, Tag } from 'antd';
+import { Divider, Space, Tag } from "antd";
 
 const { TabPane } = Tabs;
 
@@ -12,7 +12,9 @@ const ProfileContent = ({ user }) => (
   <div className="text-left">
     <div className="row-fluid ">
       <div className="col-md-6 bs">
-        <h1><b>My Profile</b></h1>
+        <h1>
+          <b>My Profile</b>
+        </h1>
         <br />
         <h1>Name: {user.name}</h1>
         <h1>Email: {user.email}</h1>
@@ -35,30 +37,44 @@ function Profilescreen() {
     {
       key: "1",
       label: (
-        <i>
-          <b>Profile</b>
-        </i>
+        <h1
+          style={{
+            fontFamily: "unset",
+            fontStyle: "italic",
+            fontWeight: "bolder",
+            fontSize: "15px",
+          }}
+        >
+          Profile
+        </h1>
       ),
       content: <ProfileContent user={user} />,
     },
     {
       key: "2",
       label: (
-        <b>
-          <i>Bookings</i>
-        </b>
+        <h1
+          style={{
+            fontFamily: "unset",
+            fontStyle: "italic",
+            fontWeight: "bolder",
+            fontSize: "15px",
+          }}
+        >
+          Bookings
+        </h1>
       ),
       content: <MyBookings user={user} />,
     },
   ];
 
-  const onChange = (key) => {
-    console.log(key);
-  };
+  // const onChange = (key) => {
+  //   console.log(key);
+  // };
 
   return (
-    <div className="ml-3 mt-3 mr-3">
-      <Tabs defaultActiveKey="1" onChange={onChange}>
+    <div className="ml-3 mt-3 mr-3" style={{ padding: "50px" }}>
+      <Tabs defaultActiveKey="1">
         {items.map((item) => (
           <TabPane tab={item.label} key={item.key}>
             {item.content}
@@ -141,8 +157,11 @@ export function MyBookings({ user }) {
               </p>
               <p>
                 <b>Status:</b>{" "}
-            {booking.status ==="cancelled" ? (<Tag color="red">Cancelled</Tag>) : <Tag color="green">Confirmed</Tag>}
-                
+                {booking.status === "cancelled" ? (
+                  <Tag color="red">Cancelled</Tag>
+                ) : (
+                  <Tag color="green">Confirmed</Tag>
+                )}
               </p>
               {booking.status === "booked" && (
                 <div className="text-right">
@@ -162,5 +181,4 @@ export function MyBookings({ user }) {
       </div>
     </div>
   );
-  
 }

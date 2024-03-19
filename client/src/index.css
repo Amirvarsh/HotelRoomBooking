@@ -17,16 +17,26 @@ code {
 
 .navbar {
   background-color: #db3434 !important;
+  height: 60px !important;
 }
 
 .nav-link {
   color: #fcfdfc !important;
   font-size: 20px !important;
+  transition: box-shadow 0.3s ease;
+}
+
+.nav-link:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-brand {
   color: #fdfdfd !important;
   font-size: 20px !important;
+  transition: box-shadow 0.3s ease;
+}
+.navbar-brand:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .navbar-nav {
@@ -40,14 +50,14 @@ code {
 }
 
 h1 {
-  font-size: 20px !important;
+  font-size: 20px;
 }
 
 .btn {
   border: 0px solid #e74c3c !important;
-  background-color: #34495e !important;
-  color: #ecf0f1 !important;
-  box-shadow: none !important;
+  background-color: #34495e;
+  color: #ecf0f1;
+  box-shadow: none;
 }
 
 .bs {
@@ -70,7 +80,7 @@ select,
   border: 2px solid #000000 !important;
   width: 100% !important;
   border-radius: 3px !important;
-  height: 35px !important;
+  height: 38px !important;
 }
 
 h2 {
@@ -78,7 +88,7 @@ h2 {
   padding: 10px;
   font-weight: bold;
   text-align: center;
-  color: #000000 !important;
+  color: #000000;
 }
 
 .dropdown-toggle {
@@ -125,25 +135,25 @@ p {
 }
 
 .landingbtn {
-  background-color: #db3434 !important;
+  background-color: lightgreen;
   color: #000000;
-  margin-top: 20px;
-  border: 2px solid transparent;
+  margin-top: 10px;
+  border: 5px solid transparent;
   padding: 10px 20px;
-  font-size: 16px;
+  font-weight: bolder;
+  font-size: 20px;
   transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 .landingbtn:hover {
-  background-color: #3498db;
-  color: white;
+  background-color: darkgreen;
+  color: whitesmoke;
   transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
 [data-aos="fade-up"] {
-  opacity: 0;
+  opacity: 1;
   transform: translateY(20px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
@@ -152,5 +162,3 @@ p {
   opacity: 1;
   transform: translateY(0);
 }
-
-

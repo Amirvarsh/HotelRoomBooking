@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-function Success({message}) {
+function Success({ message }) {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
-    <div>
-      <div class="alert alert-success" role="alert">
-        {message}
-      </div>
-    </div>
+    <>
+      {isVisible && (
+        <div className="alert alert-success" role="alert">
+          {message}
+        </div>
+      )}
+    </>
   );
 }
 

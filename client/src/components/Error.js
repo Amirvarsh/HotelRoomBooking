@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 
-function Error({message}) {
+function Error({ message }) {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div><div class="alert alert-danger" role="alert">
-    {message}
-  </div></div>
-  )
+    <>
+      {isVisible && (
+        <div className="alert alert-danger" role="alert">
+          {message}
+        </div>
+      )}
+    </>
+  );
 }
 
-export default Error
+export default Error;

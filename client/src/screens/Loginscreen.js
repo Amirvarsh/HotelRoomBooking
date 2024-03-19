@@ -23,6 +23,7 @@ function LoginScreen() {
     try {
       const result = (await axios.post("/api/users/login", user)).data;
       console.log(result);
+      setSuccess("Welcome!");
       localStorage.setItem("currentUser", JSON.stringify(result));
       window.location.href = "/home";
     } catch (error) {
@@ -37,7 +38,7 @@ function LoginScreen() {
 
       <div className="row justify-content-center mt-5">
         <div className="col-md-5 mt-5">
-          {error.length > 0 && <Error message='Invalid Credentials'></Error>}
+          {error.length > 0 && <Error message="Invalid Credentials"></Error>}
 
           <div className="bs">
             <h2>Login</h2>

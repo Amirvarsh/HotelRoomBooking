@@ -4,8 +4,6 @@ import moment from "moment";
 import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
-import StripeCheckout from "react-stripe-checkout";
-import { loadStripe } from "@stripe/stripe-js";
 import Swal from "sweetalert2";
 
 function Bookingscreen() {
@@ -16,7 +14,42 @@ function Bookingscreen() {
   const [user, setUser] = useState(null);
   const [totalamount, setTotalAmount] = useState(0);
   const [totaldays, setTotalDays] = useState(0);
-  const [stripe, setStripe] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (totalamount === "") {
+      alert("Please enter amount");
+    } else {
+      var options = {
+        key: process.env.REACT_APP_RZP_KEY,
+        key_secret: process.env.REACT_APP_RZP_KEY_SECRET,
+        amount: totalamount * 100,
+        currency: "INR",
+        name: user.name,
+        description: "Room Booking",
+        handler: function (response) {
+          onToken(response);
+        },
+        prefill: {
+          name: user.name,
+          email: user.email,
+          contact: user.phonenumber,
+        },
+        notes: {
+          address: {
+            name: user.name,
+            email: user.email,
+            phonenumber: user.phonenumber,
+          },
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      var pay = window.Razorpay(options);
+      pay.open();
+    }
+  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem("currentUser");
@@ -70,28 +103,16 @@ function Bookingscreen() {
     calculateTotalValues();
   }, [fromdate, todate, room.rentperday]);
 
-  useEffect(() => {
-    // Load Stripe
-    const loadStripeObject = async () => {
-      const stripeObj = await loadStripe(
-        "Your Api Key"
-      );
-      setStripe(stripeObj);
-    };
-
-    loadStripeObject();
-  }, []);
-
   async function onToken(token) {
     console.log(token);
     const bookingDetails = {
+      token,
       room,
       userid: JSON.parse(localStorage.getItem("currentUser"))._id,
       fromdate,
       todate,
       totalamount,
       totaldays,
-      token,
     };
 
     try {
@@ -112,7 +133,7 @@ function Bookingscreen() {
   }
 
   return (
-    <div className="m-5">
+    <div className="m-5" style={{ padding: "30px " }}>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -149,14 +170,9 @@ function Bookingscreen() {
               </b>
             </div>
             <div style={{ float: "right" }}>
-              <StripeCheckout
-                amount={totalamount * 100}
-                currency="INR"
-                token={onToken}
-                stripeKey="Your API Key"
-              >
-                <button className="btn btn-primary">Pay Now</button>
-              </StripeCheckout>
+              <button className="btn btn-primary" onClick={handleSubmit}>
+                Pay Now
+              </button>
             </div>
           </div>
         </div>

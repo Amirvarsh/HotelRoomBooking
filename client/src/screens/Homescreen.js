@@ -91,7 +91,7 @@ function Homescreen() {
   }
 
   function filterByType(e) {
-    settype(e)
+    settype(e);
     if (e !== "all") {
       const temprooms = duplicaterooms.filter(
         (room) => room.type.toLowerCase() == e.toLowerCase()
@@ -103,11 +103,11 @@ function Homescreen() {
   }
 
   return (
-    <div className="container">
+    <div className="container" style={{ padding: "60px" }}>
       <div className="row mt-5 bs">
         <div className="col-md-3">
           <RangePicker
-            format="DD-MM-YYYY"
+            format="DD-MMM-YYYY"
             onChange={filterByDate}
             style={{ width: "100%" }}
           />
@@ -140,7 +140,7 @@ function Homescreen() {
         </div>
       </div>
 
-      <div className="row justify-content-center mt-5">
+      <div className="row justify-content-center mt-3">
         {loading ? (
           <h1>
             <Loader />
