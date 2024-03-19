@@ -21,7 +21,12 @@ function LoginScreen() {
     };
     //console.log(user);
     try {
-      const result = (await axios.post("/api/users/login", user)).data;
+      const result = (
+        await axios.post(
+          "https://hotelroombooking-i61u.onrender.com//api/users/login",
+          user
+        )
+      ).data;
       console.log(result);
       setSuccess("Welcome!");
       localStorage.setItem("currentUser", JSON.stringify(result));
