@@ -9,7 +9,7 @@ const bookingsRoute = require("./routes/bookingsRoute");
 
 app.use(
   cors({
-    origin: ["https://deploy-mern-lwhp.vercel.app"],
+    origin: ["https://hotel-room-booking-1mzg.vercel.app/"],
     method: ["POST", "GET"],
     credentials: true,
   })
