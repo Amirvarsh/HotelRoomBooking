@@ -1,24 +1,6 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
   "routes": [
-    {
-      "src": "/api/rooms",
-      "dest": "server.js"
-    },
-    {
-      "src": "/api/users",
-      "dest": "server.js"
-    },
-    {
-      "src": "/api/bookings",
-      "dest": "server.js"
-    },
     {
       "src": "/(.*)",
       "dest": "/"
