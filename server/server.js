@@ -20,7 +20,7 @@ app.use("/api/rooms", roomsRoute);
 app.use("/api/users", usersRoute);
 app.use("/api/bookings", bookingsRoute);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 app.get("/", (req, res) => {
   res.send("It is working successfully");
 });
